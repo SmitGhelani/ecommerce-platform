@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 interface LoginInterface {
   email: string,
@@ -60,7 +61,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
                     <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                         <div className="flex flex-col md:flex-row">
                             <div className="h-32 md:h-auto md:w-1/2">
-                                <img className="object-cover w-full h-full" src="" alt="Login" />
+                                <Image className="object-cover w-full h-full" src="" alt="Login" />
                             </div>
                             <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                                 <div className="w-full">

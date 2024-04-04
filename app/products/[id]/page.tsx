@@ -3,6 +3,8 @@ import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/lib/store/slices/cartSlice";
 
 interface ProductInterface {
     features: {
@@ -39,6 +41,8 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
         createdAt: ""
     })
 
+    const dispatch = useDispatch();
+
     useEffect(()=>{
         axios.post("http://localhost:3000/api/productDetails",
         {
@@ -68,7 +72,7 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
                         <span className="ml-1 text-gray-900 font-bold">£{productData.price}</span>
                     </div>
                     <div className="mt-6">
-                        <button className="px-8 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-700">Add to Cart</button>
+                        <button  onClick={()=>dispatch(addToCart(productData))} className="px-8 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-700">Add to Cart</button>
                     </div>
                 </div>
             </div>

@@ -1,25 +1,58 @@
+import { ProductInterface } from "@/app/components/card";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface CartState {
-    items: any[]
-} 
+export interface ItemInterface {
+    product: ProductInterface,
+    quantity: number
+}
 
-const initialState: CartState = {
+export interface CartState {
+    items: ItemInterface[]
+}
+
+const initialState:CartState = {
     items: []
 }
 
 const cartSlice = createSlice({
-    name: "cart",
+    name:"cart",
     initialState: initialState,
     reducers: {
-        add(state, {type,payload}) {
-            state.items.push(payload)
+        addToCart: (state, action) => {
+            const itemExists = state.items.find((item)=> item.product._id == action.payload._id); 
+            if(itemExists) {
+                console.log(itemExists.quantity)
+                itemExists.quantity++;
+            }else{
+                state.items.push({product:action.payload, quantity:1});
+            }
         },
-        remove(state:any, {type,payload}:{type:string,payload:any[]}) {
-            return state.items.filter((item:any) => item.id !== payload)
+        increaseQuantity: (state, action) => {
+            const item = state.items.find((item)=> item.product._id == action.payload)
+            if(item) {
+                item.quantity++;
+            }
+        },
+        decreaseQuantity: (state, action) =>{
+            const item = state.items.find((item)=>item.product._id == action.payload)
+            if(item) {
+                if(item.quantity == 1) {
+                    const index = state.items.findIndex((item)=>item.product._id == action.payload)
+                    state.items.splice(index, 1);
+                } else {
+                    item.quantity--;
+                }
+            }  
+        },
+        removeFromCart : (state, action) =>{
+            const index = state.items.findIndex((item) =>  item.product._id == action.payload)
+
+            state.items.splice(index, 1)
         }
     }
 })
 
-export const {add, remove} = cartSlice.actions;
-export default cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;
+
+export const { addToCart, increaseQuantity, decreaseQuantity, removeFromCart } = cartSlice.actions;
+

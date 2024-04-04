@@ -1,15 +1,17 @@
 import { wrap } from "module";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import {addToCart} from '@/app/lib/store/slices/cartSlice'
 
-interface ProductInterface {
+export interface ProductInterface {
     features: {
         Color: string,
         Size: string,
         Material: string
     },
     _id: string,
-    name: string,
+    product_name: string,
     description: string,
     price: number,
     category: string,
@@ -20,6 +22,7 @@ interface ProductInterface {
 
 const Card = ({productData}:{productData:any}) => {
 
+    const dispatch = useDispatch();
     return (
             <div className="p-4 lg:w-1/4 md:w-1/2">
                 <div className="bg-white shadow-sm rounded-md overflow-hidden">
@@ -35,6 +38,9 @@ const Card = ({productData}:{productData:any}) => {
                                 </svg>
                             </Link>
                             <span className="text-gray-600 ml-auto">£{productData && productData.price ? productData.price : ""}</span>
+                        </div>
+                        <div className="mt-6">
+                            <button  onClick={()=>dispatch(addToCart(productData))} className="px-8 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-700">Add to Cart</button>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const MainBanner = () => {
     return (
@@ -15,7 +16,7 @@ const MainBanner = () => {
                         </div>
                     </div>
                     <div className="mt-8 lg:mt-0">
-                        <img className="rounded-lg shadow-lg w-full" src="./sale.jpg" alt="Seasonal Sale Banner" />
+                        <Image className="rounded-lg shadow-lg w-full" src="./sale.jpg" alt="Seasonal Sale Banner" />
                     </div>
                 </div>
             </div>
