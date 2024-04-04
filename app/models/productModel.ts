@@ -1,4 +1,5 @@
 import mongoose, { model } from "mongoose";
+import { features } from "process";
 
 const ProductSchema = new mongoose.Schema({
     name: {
@@ -43,6 +44,7 @@ const ProductSchema = new mongoose.Schema({
     }    
 });
 
-const ProductModel =  mongoose.models.Users || model("Users", ProductSchema, "users");
+ProductSchema.index({product_name:"text"})
+const ProductModel =  mongoose.models.Products || model("Products", ProductSchema, "products");
 
 export {ProductModel, ProductSchema};

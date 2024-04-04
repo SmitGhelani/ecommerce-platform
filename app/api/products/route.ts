@@ -1,14 +1,20 @@
-import { NextRequest } from "next/server";
-import * as EmailValidator from "email-validator";
 import { ProductModel } from "@/app/models/productModel";
+import { NextRequest } from "next/server";
 
-const POST = async () => {
-    console.log("hi");
-    const products = await ProductModel.find();
+const GET = async (req:NextRequest) => {
+    const name = req.nextUrl.searchParams.get("name") as any;
+
+    let searchParam = {}
+
+    if(name){
+        searchParam = {$text:{$search:name}}
+    }
+
+    const products = await ProductModel.find(searchParam);
     if(!products){
         return Response.json({
             success: false,
-            message: "Incorrect Email or Password"
+            message: "No product found"
         })
     }
 
@@ -18,4 +24,4 @@ const POST = async () => {
     })
 }
 
-export {POST};
+export {GET};

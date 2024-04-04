@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import * as EmailValidator from "email-validator";
 import { UserModel } from "@/app/models/userModel";
 import bcrypt from "bcryptjs";
+import { SignJWT } from "jose";
 
 const POST = async (req:NextRequest) => {
     const {email, password} = await req.json()
@@ -20,9 +21,7 @@ const POST = async (req:NextRequest) => {
         })
     }
 
-    const hashedPassword = await bcrypt.hash(password)
-
-    const user = await UserModel.find({email: email, password:hashedPassword})
+    const user = await UserModel.findOne({email: email})
 
     if(!user){
         return Response.json({
@@ -30,11 +29,30 @@ const POST = async (req:NextRequest) => {
             message: "Incorrect Email or Password"
         })
     }
+    
+    if(!bcrypt.compareSync(password, user.password)){
+        return Response.json({
+            success: false,
+            message: "Invalid Password"
+        })
+    }
+
+    const token = await new SignJWT({ id: email })
+                .setProtectedHeader({ alg: "HS256" })
+                .setExpirationTime("1d")
+                .sign(new TextEncoder().encode(process.env.SECRET_KEY));
 
     return Response.json({
-        success: true,
-        user: user
-    })
+        success:true,
+        message: "User Logged In Successfully",
+        token: token,
+    },
+        {
+            headers: {
+                "set-cookie": `token=${token}; HttpOnly; Path=/; Max-Age=${1 * 60 * 60}; SameSite=Lax`
+            }
+        }
+    )
 }
 
 export {POST};

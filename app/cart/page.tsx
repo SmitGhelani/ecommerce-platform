@@ -1,9 +1,12 @@
 "use client"
 
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
+    const products = useSelector((state:any)=>state.items)
 
+    console.log(products)
     const removeItemFunction = () => {
 
     }
@@ -41,7 +44,7 @@ const Cart = () => {
                             <div className="flex justify-center w-1/5">
                                 <button className="fill-current text-gray-500 w-4" onClick={()=>removeItemFunction}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
                             </div>
