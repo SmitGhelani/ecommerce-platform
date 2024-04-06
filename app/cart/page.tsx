@@ -52,7 +52,7 @@ const Cart = () => {
                                                 </div>
                                             </div>
                                             <div className="flex justify-center w-1/5">
-                                                <input className="mx-2 border text-center w-8" type="text" value={item.quantity} />
+                                                <input className="mx-2 border text-center w-8" type="text" value={item.quantity} onChange={()=>{}} />
                                             </div>
                                             <span className="text-center w-1/5 font-semibold text-sm">£{item.product.price}</span>
                                             <div className="flex justify-center w-1/5">

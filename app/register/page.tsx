@@ -80,7 +80,7 @@ const Register = ({name="",email="", password="", confirmPassword=""}: RegisterI
                             <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                                 <div className="flex flex-col md:flex-row">
                                     <div className="h-32 md:h-auto md:w-1/2">
-                                        <Image className="object-cover w-full h-full" src="registration-image-url.jpg" alt="Register" />
+                                        <Image className="object-cover w-full h-full" height={100} width={100} src="" alt="Register" />
                                     </div>
                                     <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                                         <div className="w-full">

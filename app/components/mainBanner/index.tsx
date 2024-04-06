@@ -16,7 +16,7 @@ const MainBanner = () => {
                         </div>
                     </div>
                     <div className="mt-8 lg:mt-0">
-                        <Image className="rounded-lg shadow-lg w-full" src="./sale.jpg" alt="Seasonal Sale Banner" />
+                        <Image className="rounded-lg shadow-lg w-full" style={{background:"transparent"}} width="300" height="300" src="https://img.freepik.com/free-vector/big-sale-icon-banner-retro-comic-style_1308-157409.jpg?w=900&t=st=1712343094~exp=1712343694~hmac=9e31b3cc2f477482ba799408594e69325daad528c9f219b79b301822e9d45b9d" alt="Seasonal Sale Banner" />
                     </div>
                 </div>
             </div>

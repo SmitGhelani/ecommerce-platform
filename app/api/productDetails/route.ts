@@ -16,7 +16,6 @@ const POST = async (req:NextRequest) => {
         const productData = await ProductModel.findOne({_id:id});
 
         if(!productData){
-            console.log("error")
             return Response.json({
                 success: false,
                 message: "No Product found"

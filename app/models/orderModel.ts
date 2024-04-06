@@ -1,8 +1,12 @@
 import mongoose, { model } from "mongoose";
+import {nanoid} from "nanoid";
 
 const OrderSchema = new mongoose.Schema({
-    orderNumer: {
-        type: Number
+    orderNumber: {
+        type: String,
+        required: true,
+        default: () => nanoid(7),
+        index: { unique: true },
     },
     shippingAddress: {
         type: String,
@@ -19,7 +23,7 @@ const OrderSchema = new mongoose.Schema({
         }
     }],
     orderTotalPrice:{
-        type: String,
+        type: Number,
         require: true
     },
     userId:{

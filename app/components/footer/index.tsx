@@ -1,4 +1,7 @@
+
+
 const Footer = () => {
+
     return (
         <footer className="bg-white shadow">
             <div className="container mx-auto px-5 py-6">

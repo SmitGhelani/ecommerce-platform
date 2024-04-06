@@ -1,6 +1,40 @@
+"use client"
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ItemInterface } from "../lib/store/slices/cartSlice";
+import axios from "axios";
 
+export interface OrderInterface {
+    _id: string,
+    shippingAddress: string,
+    orderSummary: ItemInterface[],
+    orderTotalPrice: number,
+    userID: string,
+    orderNumber: string,
+    createdAt: string
+}
 const Orders = () => {
+
+    const [myOrders, setMyOrders] = useState<OrderInterface[]>([])
+    useEffect(()=>{
+        axios.post("http://localhost:3000/api/order/myOrders",{
+            id: "6611680daba6d777fa3d342e"
+        }).then((response)=> {
+            setMyOrders(response.data.myOrders)
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },[])
+
+    const countTotalItems = (orderDetails:ItemInterface[]) => {
+        let count = 0
+        orderDetails.map((order)=>{
+            count += order.quantity
+        })
+
+        return count
+    }
+
     return (
         <div className="container mx-auto mt-10">
             <div className="bg-white shadow-md rounded my-6">
@@ -15,15 +49,20 @@ const Orders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="hover:bg-grey-lighter">
-                            <td className="py-4 px-6 border-b border-grey-light">123456</td>
-                            <td className="py-4 px-6 border-b border-grey-light">01 Jan 2024</td>
-                            <td className="py-4 px-6 border-b border-grey-light">£150.00</td>
-                            <td className="py-4 px-6 border-b border-grey-light">3 Items</td>
-                            <td className="py-4 px-6 border-b border-grey-light">
-                                <Link href="/order-details" className="text-blue-500 hover:text-blue-800">View</Link>
-                            </td>
-                        </tr>
+                        {
+                            myOrders && myOrders.map((order)=>(
+                                <tr key={order._id} className="hover:bg-grey-lighter">
+                                    <td className="py-4 px-6 border-b border-grey-light">{order.orderNumber}</td>
+                                    <td className="py-4 px-6 border-b border-grey-light">{order.createdAt}</td>
+                                    <td className="py-4 px-6 border-b border-grey-light">£{order.orderTotalPrice}</td>
+                                    <td className="py-4 px-6 border-b border-grey-light">{countTotalItems(order.orderSummary)}</td>
+                                    <td className="py-4 px-6 border-b border-grey-light">
+                                        <Link href={`/orders/${order._id}`} className="text-blue-500 hover:text-blue-800">View</Link>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        
                     </tbody>
                 </table>
             </div>
