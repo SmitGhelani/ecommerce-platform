@@ -5,10 +5,12 @@ import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import appStore from "../lib/store/store";
 
 const Checkout = () => {
 
     const cart= useSelector((state:any) => state.cart)
+    const user= useSelector((state:any) => state.user)
     const [cartError, setCartError] = useState("")
     const [cartSuccess, setCartSuccess] = useState("")
     const route = useRouter()
@@ -50,6 +52,7 @@ const Checkout = () => {
     }
 
     const placeOrder = async (values: any) => {
+      console.log("checkout: ",appStore.getState().user)
       const response:AxiosResponse = await axios.post("http://localhost:3000/api/order",
       {
         "name": values.name,

@@ -27,17 +27,23 @@ const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
-        addLoggedInUser: (state, action)=>{
-            if (state.user._id === "") {
-                state.user = action.payload
+        addLoggedInUserEmail: (state, action)=>{
+            if (state.user._id === "" || state.user.email !== action.payload) {
+                state.user.email = action.payload
             }
+        },
+        addLoggedInUserData: (state, action)=>{
+                state.user = action.payload
         },
         removeLoggedInUser: (state) => {
             state.user = initialState.user
+        },
+        returnState: (state:any) => {
+            return state.user
         }
     }
 });
 
 export const userReducer = userSlice.reducer
 
-export const {addLoggedInUser, removeLoggedInUser} = userSlice.actions
+export const {addLoggedInUserEmail, addLoggedInUserData, removeLoggedInUser, returnState} = userSlice.actions

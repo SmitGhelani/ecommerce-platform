@@ -26,7 +26,7 @@ const POST = async (req: NextRequest) => {
         })
     }
     
-    if (!orderDetails) {
+    if (!orderDetails || !orderDetails.orderSummary) {
         return Response.json({
             success: false,
             message: "No Order details found"

@@ -20,6 +20,7 @@ const Cart = () => {
 
         return totalAmout
     }
+
     return (
         <div>
             <div className="container mx-auto mt-10">
@@ -27,7 +28,7 @@ const Cart = () => {
                     <div className="w-full bg-white px-10 py-10">
                         <div className="flex justify-between border-b pb-8">
                             <h1 className="font-semibold text-2xl">Shopping Cart</h1>
-                            <h2 className="font-semibold text-2xl">3 Items</h2>
+                            <h2 className="font-semibold text-2xl">{cart.items.length > 0 ? cart.items.length : 0} Items</h2>
                         </div>
                         {cart.items.length === 0 ? (
                                 <h1>Your Cart is Empty!</h1>
