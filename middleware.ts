@@ -9,12 +9,13 @@ const middleware = async (req: NextRequest) => {
     try {
         const token = req.cookies.get("token")?.value;
         const isLoggedIn = token && ( await verifyToken(token))
+        const loggedInUser = localStorage.getItem("loggedInUser")
+        console.log(loggedInUser)
 
-        if (isLoggedIn) {
+        if (isLoggedIn && loggedInUser) {
             const decoded = jwtDecode(token);
             appStore.dispatch(addLoggedInUserEmail(decoded.id))
             appStore.dispatch(getUserData(appStore.getState().user.user.email) as any)
-            console.log(appStore.getState().user.user)
             return NextResponse.next()
         } else {
             throw new Error("Invalid User")

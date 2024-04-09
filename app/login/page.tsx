@@ -7,6 +7,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedInUserData } from "../lib/store/slices/userSlices";
+import bcryptjs from "bcryptjs";
 
 interface LoginInterface {
   email: string,
@@ -52,6 +53,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
           setLoginError(response.data.message)
         }else{
           dispatch(addLoggedInUserData(response.data.currentUser))
+          localStorage.setItem("loggedInUser", user.user)
           route.push('/')
         }
     };
@@ -66,7 +68,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
                     <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                         <div className="flex flex-col md:flex-row">
                             <div className="h-32 md:h-auto md:w-1/2">
-                                <Image className="object-cover w-full h-full" height="150" width="100" src="https://t4.ftcdn.net/jpg/04/60/71/01/240_F_460710131_YkD6NsivdyYsHupNvO3Y8MPEwxTAhORh" alt="Login" />
+                                <Image className="object-cover w-full h-full" height="900" width="600" src="https://t4.ftcdn.net/jpg/04/60/71/01/240_F_460710131_YkD6NsivdyYsHupNvO3Y8MPEwxTAhORh.jpg" alt="Login" />
                             </div>
                             <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                                 <div className="w-full">

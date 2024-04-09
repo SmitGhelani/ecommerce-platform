@@ -17,7 +17,7 @@ const Products = () => {
     const [end, setEnd] = useState(12)
     const productCategories = ["All", "Toys", "Sports", "Clothing", "HomeKitchen", "BabyProduct", "Games", "PetSupplies", "Jewelry", "Accessories", "ArtsCrafts"]
     const user = useSelector((state:any)=>state.user)
-    console.log("loggedinuser:",user.user)
+    const [productsCount, setProductsCount] = useState(0)
 
     useEffect(() => {
         if(filter == "All"){
@@ -28,11 +28,14 @@ const Products = () => {
         }`)
         .then((response)=>{
             setProductData(response.data.products)
+            setProductsCount(response.data.products.length)
+            setStart(0)
+            setEnd(12)
         })
         .catch((error)=>{
             console.log(error)
         })
-    },[search, filter]);
+    },[search, filter, productsCount]);
 
     const setFilterClass = (e:any, type:any) => {
         if (type !== "All") {
@@ -95,14 +98,14 @@ const Products = () => {
                 </div>
                 <div className="flex flex-row w-full items-center text-center justify-center text-2xl font-bold">
                     {"   "}
-			        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{start + 1} -{"   "}
-			        {end}
+			        {start + 1} -{"   "}
+			        {end > productsCount ? productsCount: end}
                 </div>
                 <div className="flex w-full items-center text-center justify-center">
                     <button
 			        	className="flex flex-row bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 			        	onClick={() => {
-			        		if (end <= 99) {
+			        		if (end <= productsCount) {
 			        			setStart(start + 12);
 			        			setEnd(end + 12);
 			        		}

@@ -64,7 +64,6 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
 
     useEffect(()=>{
         if (cart.items.length > 0){
-            console.log(cart.items)
             const itemfromCart = cart.items.find((item:ItemInterface)=>item.product.productId == productData._id)
             if (itemfromCart){
                 setItemsInCart(itemfromCart.quantity)

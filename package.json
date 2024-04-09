@@ -12,7 +12,6 @@
     "@material-tailwind/react": "^2.1.9",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
-    "bcryptjs": "^2.4.3",
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.9.1",
     "cookies-next": "^4.1.1",
@@ -40,6 +39,7 @@
     "eslint-config-next": "14.1.4",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "bcryptjs": "^2.4.3"
   }
 }

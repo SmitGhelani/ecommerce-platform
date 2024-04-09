@@ -68,7 +68,7 @@ const Checkout = () => {
           // route.push('/login');
           setCartError(response.data.message)
         }else{
-          route.push("/checkout");
+          route.push("/");
           setCartSuccess("Order Placed Successfully!!!");
           setTimeout(()=>{
             window.location.reload();

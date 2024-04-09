@@ -31,7 +31,6 @@ const userSlice = createSlice({
         },
         removeLoggedInUser: (state) => {
             state.user = initialState.user
-            console.log("loggedout:",state.user)
         },
         returnState: (state:any) => {
             return state.user
