@@ -3,6 +3,7 @@ import { OrderModel } from "@/app/models/orderModel";
 import { ProductModel } from "@/app/models/productModel";
 import { OrderInterface } from "@/app/orders/page";
 import { NextRequest } from "next/server";
+import "../../lib/data/db"
 
 const POST = async(req: NextRequest) => {
     const {oid} = await req.json()

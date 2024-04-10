@@ -3,13 +3,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ItemInterface } from "../interfaces/itemInterface";
+import { useSelector } from "react-redux";
 
 const Orders = () => {
 
+    const user = useSelector((state:any)=>state.user)
+    
     const [myOrders, setMyOrders] = useState<OrderInterface[]>([])
     useEffect(()=>{
         axios.post("http://localhost:3000/api/order/myOrders",{
-            id: "6612acaa8c67e7e85ec73ed3"
+            id: user.user._id
         }).then((response)=> {
             setMyOrders(response.data.myOrders)
         }).catch((error)=>{

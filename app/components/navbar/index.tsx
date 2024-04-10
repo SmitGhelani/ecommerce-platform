@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import destroyToken from "@/app/utils/destroyToken";
 
 
 const Navbar = () => {
@@ -12,6 +13,7 @@ const Navbar = () => {
     const route = useRouter()
 
     const logout = () => {
+        destroyToken();
         route.push("/")
         dispatch(removeLoggedInUser())
     }

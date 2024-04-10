@@ -1,28 +1,35 @@
 import { NextRequest } from "next/server";
 import * as EmailValidator from "email-validator";
 import { UserModel } from "@/app/models/userModel";
+import "../../lib/data/db"
+import appStore from "@/app/lib/store/store";
 
 const POST = async (req:NextRequest) => {
     const {email} = await req.json()
+
     if (!email || !EmailValidator.validate(email)) {
         return Response.json({
             success: false,
-            message: "Invalid Email Field"
-        })
+            isAuthenticated: false,
+            message: "Missing or Invalid Email"
+        });
     }
 
-    const loggedInUser = await UserModel.findOne({email:email})
+    const user = await UserModel.findOne({email:email})
 
-    if (!loggedInUser) {
+    if (!user) {
         return Response.json({
             success: false,
-            message: "Logged In User Is not Valid !!"
+            isAuthenticated: false,
+            messgae: "Issue getting user data"
         })
     }
 
     return Response.json({
-        success: false,
-        loggedInUser: loggedInUser
+        success: true,
+        isAuthenticated: true,
+        messgae: "User Authenticated Successfully",
+        user: user
     })
 }
 

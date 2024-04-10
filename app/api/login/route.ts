@@ -3,6 +3,7 @@ import * as EmailValidator from "email-validator";
 import { UserModel } from "@/app/models/userModel";
 import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
+import "../../lib/data/db"
 
 const POST = async (req:NextRequest) => {
     const {email, password} = await req.json()

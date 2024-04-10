@@ -5,6 +5,9 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import "@/app/lib/data/db";
 import StoreProvider from "./storeProvider";
+import getToken from "./utils/getToken";
+import { redirect } from "next/dist/server/api-utils";
+import { NextRequest } from "next/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +21,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = getToken()
+  if(!token) {
+    return Response.redirect("/login")
+  }
+
   return (
     <StoreProvider>
       <html lang="en">

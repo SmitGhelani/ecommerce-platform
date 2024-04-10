@@ -1,5 +1,6 @@
 import { OrderModel } from "@/app/models/orderModel";
 import { NextRequest } from "next/server";
+import "../../lib/data/db"
 
 const POST = async(req: NextRequest) => {
     const {id} = await req.json()

@@ -1,6 +1,7 @@
 import { ProductInterface } from "@/app/interfaces/productInterface";
 import { ProductModel } from "@/app/models/productModel";
 import { NextRequest } from "next/server";
+import "../../lib/data/db"
 
 const GET = async (req:NextRequest) => {
     const name = req.nextUrl.searchParams.get("name") as any;

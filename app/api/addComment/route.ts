@@ -1,6 +1,7 @@
 import { CommentModel } from "@/app/models/commentsModel";
 import { NextRequest } from "next/server";
 import * as EmailValidator from "email-validator";
+import "../../lib/data/db"
 
 const POST = async (req:NextRequest) => {
     const {userId, comment, productId, username, email} = await req.json()

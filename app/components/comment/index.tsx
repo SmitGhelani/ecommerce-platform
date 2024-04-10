@@ -12,7 +12,7 @@ const CommentBox = ({prodId}:any) => {
     const [commentData, setCommentData] = useState<any>([])
     const [commentError, setCommentError] = useState("");
     const route = useRouter();
-    const user = useSelector((state)=> state.user)
+    const user = useSelector((state:any)=> state.user)
 
     const initialValues = {
         comment:""
@@ -43,8 +43,8 @@ const CommentBox = ({prodId}:any) => {
             "userId": user.user._id,
             "comment": values.comment,
             "productId": pID,
-            "username": "smit",
-            "email": "ghelanismit@gmail.com"
+            "username": user.user.name,
+            "email": user.user.email
         })
 
         if (!commentResponse.data.success){

@@ -4,19 +4,24 @@ import { NextRequest, NextResponse } from "next/server"
 import appStore from "./app/lib/store/store";
 import { addLoggedInUserEmail } from "./app/lib/store/slices/userSlices";
 import { getUserData } from "./app/lib/store/actions/user";
+import axios from "axios";
 
 const middleware = async (req: NextRequest) => {
     try {
         const token = req.cookies.get("token")?.value;
         const isLoggedIn = token && ( await verifyToken(token))
-        const loggedInUser = localStorage.getItem("loggedInUser")
-        console.log(loggedInUser)
-
-        if (isLoggedIn && loggedInUser) {
+        
+        if (isLoggedIn) {
             const decoded = jwtDecode(token);
-            appStore.dispatch(addLoggedInUserEmail(decoded.id))
-            appStore.dispatch(getUserData(appStore.getState().user.user.email) as any)
-            return NextResponse.next()
+            if (decoded) {
+                const isAuthenticated = await appStore.dispatch(getUserData(decoded.id) as any)
+                if(isAuthenticated) {
+                    return NextResponse.next()
+                } else {
+                    throw new Error("No User Found")
+                }
+            }
+            
         } else {
             throw new Error("Invalid User")
         }

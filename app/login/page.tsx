@@ -7,7 +7,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedInUserData } from "../lib/store/slices/userSlices";
-import bcryptjs from "bcryptjs";
+import getToken from "../utils/getToken";
 
 interface LoginInterface {
   email: string,
@@ -16,6 +16,7 @@ interface LoginInterface {
 
 const Login = ({email="", password=""}: LoginInterface) => {
 
+    // const token = getToken()
     const route = useRouter();
     const [loginError, setLoginError] = useState("");
     const dispatch = useDispatch()

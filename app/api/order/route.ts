@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import {OrderModel} from "@/app/models/orderModel"
 import * as EmailValidator from "email-validator";
+import "../../lib/data/db"
 
 const POST = async (req: NextRequest) => { 
     const {name, email, shippingAddress, orderDetails, totalCartValue, userDetails} = await req.json()
