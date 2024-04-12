@@ -1,10 +1,6 @@
 import verifyToken from "@/app/utils/verifyToken"
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server"
-import appStore from "./app/lib/store/store";
-import { addLoggedInUserEmail } from "./app/lib/store/slices/userSlices";
-import { getUserData } from "./app/lib/store/actions/user";
-import axios from "axios";
 
 const middleware = async (req: NextRequest) => {
     try {
@@ -14,12 +10,7 @@ const middleware = async (req: NextRequest) => {
         if (isLoggedIn) {
             const decoded = jwtDecode(token);
             if (decoded) {
-                const isAuthenticated = await appStore.dispatch(getUserData(decoded.id) as any)
-                if(isAuthenticated) {
-                    return NextResponse.next()
-                } else {
-                    throw new Error("No User Found")
-                }
+                return NextResponse.next()
             }
             
         } else {

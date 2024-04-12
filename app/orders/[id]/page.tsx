@@ -1,7 +1,6 @@
 "use client"
 import { ItemInterface } from "@/app/interfaces/itemInterface";
-import ProductDetails from "@/app/products/[id]/page";
-import axios from "axios";
+import validateAuthentication from "@/app/utils/validateAuthentication";
 import { useEffect, useState } from "react";
 
 const OrderDetails = ({params}: {params:{id:string}}) =>{
@@ -13,10 +12,14 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
     const [orderData, setOrderData] = useState({})
 
     useEffect(()=>{
-        axios.post("http://localhost:3000/api/order/myOrders/orderDetail",{
+        
+        validateAuthentication();
+
+        fetch("http://localhost:3000/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
             oid: id
-        }).then((response)=>{
-            setOrderData(response.data.myOrderDetail)
+        })}).then((response)=>response.json())
+        .then((data)=>{
+            setOrderData(data.myOrderDetail)
         }).catch((error)=>{
             console.log(error)
         })
@@ -35,7 +38,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
   
 
     return (
-        <div className="container mx-auto mt-10">
+        <div className="container mx-auto mt-10 mb-20 p-10">
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-6">
                     <h1 className="text-xl font-semibold">Order #{orderData.orderDetails ? orderData.orderDetails._id : "" } Details</h1>
@@ -45,7 +48,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
                         <h2 className="text-lg font-semibold">Shipping Information</h2>
                         <p>{orderData.orderDetails ? orderData.orderDetails.shippingAddress : ""}</p>
                     </div>
-                    <div className="w-1/2 ml-2">
+                    <div className="w-1/2 ml-2 ">
                         <h2 className="text-lg font-semibold">Billing Information</h2>
                         <p>{orderData.orderDetails ? orderData.orderDetails.shippingAddress: ""}</p>
                     </div>

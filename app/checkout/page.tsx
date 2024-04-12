@@ -1,11 +1,10 @@
 "use client"
-import { useSelector } from "react-redux";
-import axios, { AxiosResponse } from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import appStore from "../lib/store/store";
 import { ItemInterface } from "../interfaces/itemInterface";
+import { destroyCart } from "../lib/store/slices/cartSlice";
 
 const Checkout = () => {
 
@@ -14,10 +13,11 @@ const Checkout = () => {
     const [cartError, setCartError] = useState("")
     const [cartSuccess, setCartSuccess] = useState("")
     const route = useRouter()
+    const dispatch = useDispatch()
 
     const initialValues = {
-      name: "",
-      email: "",
+      name: user.user.name,
+      email: user.user.email,
       shippingAddress: ""
     };
 
@@ -52,8 +52,7 @@ const Checkout = () => {
     }
 
     const placeOrder = async (values: any) => {
-      const response:AxiosResponse = await axios.post("http://localhost:3000/api/order",
-      {
+      const response = await fetch("http://localhost:3000/api/order",{method:"POST",body:JSON.stringify({
         "name": values.name,
         "email": values.email,
         "shippingAddress": values.shippingAddress,
@@ -62,17 +61,16 @@ const Checkout = () => {
         "userDetails": {
             "_id": user.user._id
         }
-      })
+      })})
+      
+      const data = await response.json()
 
-        if (!response.data.success){
+        if (!data.success){
           // route.push('/login');
-          setCartError(response.data.message)
+          setCartError(data.message)
         }else{
-          route.push("/");
           setCartSuccess("Order Placed Successfully!!!");
-          setTimeout(()=>{
-            window.location.reload();
-          }, 3000)
+          dispatch(destroyCart())
         }
     }
 
@@ -82,17 +80,17 @@ const Checkout = () => {
           (formik)=>{
               const {values, errors, touched, handleBlur, handleChange, handleSubmit} = formik;
               return(
-                  <div className="container mx-auto mt-10">
+                  <div className="container mx-auto p-10 mb-20">
                     <div className="flex flex-col md:flex-row">
-                      <div className="md:w-3/4 mr-2 bg-white p-5 shadow-md">
-                        <h2 className="text-2xl font-bold mb-6">Checkout</h2>
+                      <div className="md:w-3/4 mr-2 bg-white p-5 shadow-md rounded">
+                        <h2 className="text-2xl font-bold mb-6 text-slate-700">Checkout</h2>
                         <form onSubmit={handleSubmit}>
                           <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2"
                               >Name</label>
                             <input
                               type="text"
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                              className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                               name="name"
                               value={values.name}
                               onChange={handleChange}
@@ -110,7 +108,7 @@ const Checkout = () => {
                             </label>
                             <input
                               type="email"
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                              className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                               name="email"
                               value={values.email}
                               onChange={handleChange}
@@ -128,7 +126,7 @@ const Checkout = () => {
                             </label>
                             <input
                               type="text"
-                              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                              className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                               name="shippingAddress"
                               value={values.shippingAddress}
                               onChange={handleChange}
@@ -151,7 +149,7 @@ const Checkout = () => {
                           </div> */}
                           <div className="flex items-center justify-between">
                             <button
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                              className="w-full px-4 py-2 text-sm font-medium text-white bg-slate-600 rounded-md hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300"
                               type="submit"
                             >
                               Place Order
@@ -159,36 +157,36 @@ const Checkout = () => {
                           </div>
                         </form>
                       </div>
+                      {cart.items.length === 0 ? (
+                          <h1>Your Cart is Empty!</h1>
+                        ) :
+                          <div className="md:w-1/3 ml-2 bg-white p-5 shadow-md rounded">
+                            <h3 className="text-xl font-bold mb-4">Your Order</h3>
+                            <div className="mb-2">
+                          {
+                            cart.items.map((item:ItemInterface)=>(
+                              <div key={item.product._id}>
+                                <span className="block text-gray-700 text-sm font-bold mb-2"><p className="line-clamp-1" >{item.product.product_name}</p> x {item.quantity}</span>
+                                <span className="block text-gray-700 text-sm font-bold mb-2">£{item.product.price*item.quantity}</span> 
+                              </div>
+                            ))
+                          }
+                          </div>
+                            <div className="border-t mt-7">
+                              <div className="flex justify-between mt-4">
+                                <span className="block text-gray-700 text-lg font-bold mb-2">Total</span>
+                                <span className="block text-gray-700 text-lg font-bold mb-2">£{totalBillAmout()}</span>
+                              </div>
+                            </div>
+                          </div>
+                      }
+                      </div>
                       {cartError && cartError && (
                         <span style={{color:"red"}} className="error">{cartError}</span>
                       )}
                       {cartSuccess && cartSuccess && (
                         <span style={{color:"green"}} className="error">{cartSuccess}</span>
                       )}
-                      {cart.items.length === 0 ? (
-                          <h1>Your Cart is Empty!</h1>
-                        ) :
-                          <div className="md:w-1/4 ml-2 bg-white p-5 shadow-md">
-                            <h3 className="text-xl font-bold mb-4">Your Order</h3>
-                            <div className="mb-2">
-                          {
-                            cart.items.map((item:ItemInterface)=>(
-                              <div key={item.product._id}>
-                                <span className="text-gray-600">{item.product.product_name} x {item.quantity}</span>
-                                <span className="float-right">£{item.product.price*item.quantity}</span> 
-                              </div>
-                            ))
-                          }
-                          </div>
-                            <div className="border-t mt-4">
-                              <div className="flex justify-between mt-4">
-                                <span className="font-bold text-lg">Total</span>
-                                <span className="font-bold text-lg">£{totalBillAmout()}</span>
-                              </div>
-                            </div>
-                          </div>
-                      }
-                      </div>
                   </div>
                 );
               }

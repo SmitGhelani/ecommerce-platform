@@ -1,14 +1,11 @@
 "use client"
-import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { boolean } from "yup";
-import { addLoggedInUserData } from "../lib/store/slices/userSlices";
-import bcryptjs from "bcryptjs";
+import { addLoggedInUserData, toggleAuthentication } from "../lib/store/slices/userSlices";
 
 interface RegisterInterface {
     name:string,
@@ -60,19 +57,20 @@ const Register = ({name="",email="", password="", confirmPassword=""}: RegisterI
 
 
     const submitForm = async (values:any) => {
-        const response:AxiosResponse = await axios.post("http://localhost:3000/api/register",
-            {
+        const response = await fetch("http://localhost:3000/api/register",{method:"POST",body:JSON.stringify({
                 name: values.name,
                 email: values.email,
                 password: values.password
-            })
+            })})
+        const data = await response.json()
             
-        if (!response.data.success){
+        if (!data.success){
             // route.push('/register');
-            setSignupError(response.data.message)
+            setSignupError(data.message)
         }else{
-            dispatch(addLoggedInUserData(response.data.currentUser))
+            dispatch(addLoggedInUserData(data.currentUser))
             localStorage.setItem("loggedInUser", user.user)
+            dispatch(toggleAuthentication(true))
             route.push('/')
         }
     };
@@ -83,7 +81,7 @@ const Register = ({name="",email="", password="", confirmPassword=""}: RegisterI
                 (formik)=>{
                     const {values, errors, touched, handleBlur, handleChange, handleSubmit} = formik;
                     return(
-                        <div className="flex items-center min-h-screen bg-gray-100">
+                        <div className="flex items-center min-h-screen bg-zinc-300">
                             <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                                 <div className="flex flex-col md:flex-row">
                                     <div className="h-32 md:h-auto md:w-1/2">
@@ -94,39 +92,39 @@ const Register = ({name="",email="", password="", confirmPassword=""}: RegisterI
                                             <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">Create Your Account</h1>
                                             <form onSubmit={handleSubmit}>
                                                 <div>
-                                                    <label className="block text-sm">Name</label>
-                                                    <input type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="John Doe" />
+                                                    <label className="block text-sm font-medium">Name</label>
+                                                    <input type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="John Doe" />
                                                     {errors.name && touched.name && (
                                                       <span style={{color:"red"}} className="error">{errors.name}</span>
                                                     )}
                                                 </div>
 
                                                 <div className="mt-4">
-                                                    <label className="block text-sm">Email</label>
-                                                    <input type="email" name="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="name@example.com" />
+                                                    <label className="block text-sm font-medium">Email</label>
+                                                    <input type="email" name="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="name@example.com" />
                                                     {errors.email && touched.email && (
                                                       <span style={{color:"red"}} className="error">{errors.email}</span>
                                                     )}
                                                 </div>
 
                                                 <div className="mt-4">
-                                                    <label className="block text-sm">Password</label>
-                                                    <input type="password" name="password" value={values.password} onBlur={handleBlur} onChange={handleChange} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
+                                                    <label className="block text-sm font-medium">Password</label>
+                                                    <input type="password" name="password" value={values.password} onBlur={handleBlur} onChange={handleChange} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
                                                     {errors.password && touched.password && (
                                                       <span style={{color:"red"}} className="error">{errors.password}</span>
                                                     )}
                                                 </div>
 
                                                 <div className="mt-4">
-                                                    <label className="block text-sm">Confirm Password</label>
-                                                    <input type="password" name="confirmPassword" value={values.confirmPassword} onBlur={handleBlur} onChange={handleChange} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
+                                                    <label className="block text-sm font-medium">Confirm Password</label>
+                                                    <input type="password" name="confirmPassword" value={values.confirmPassword} onBlur={handleBlur} onChange={handleChange} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
                                                     {errors.confirmPassword && touched.confirmPassword && (
                                                       <span style={{color:"red"}} className="error">{errors.confirmPassword}</span>
                                                     )}
                                                 </div>
 
                                                 <div className="mt-6">
-                                                    <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                                                    <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-slate-600 rounded-md hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300">
                                                         Register
                                                     </button>
                                                 </div>
@@ -136,7 +134,7 @@ const Register = ({name="",email="", password="", confirmPassword=""}: RegisterI
                                             </form>
 
                                             <p className="mt-4 text-xs text-center text-gray-600">
-                                                Already have an account? <Link href="login" className="text-indigo-600 hover:underline">Login here</Link>
+                                                Already have an account? <Link href="login" className="text-slate-600 hover:underline">Login here</Link>
                                             </p>
                                         </div>
                                     </div>

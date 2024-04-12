@@ -60,7 +60,7 @@ const cartSlice = createSlice({
 
             state.items.splice(index, 1)
         },
-        destroyCart: (state, action) =>{
+        destroyCart: (state) =>{
             state.items = initialState.items
         }
     }
@@ -68,5 +68,5 @@ const cartSlice = createSlice({
 
 export const cartReducer = cartSlice.reducer;
 
-export const { addToCart, increaseQuantity, decreaseQuantity, removeFromCart } = cartSlice.actions;
+export const { addToCart, increaseQuantity, decreaseQuantity, removeFromCart, destroyCart } = cartSlice.actions;
 

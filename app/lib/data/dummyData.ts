@@ -9,7 +9,7 @@ const featuringProducts = [
         "Material": "Wool"
       },
       "price": 237.68,
-      "category": "Sports & Outdoors",
+      "category": "Sports",
       "image": "https://images-na.ssl-images-amazon.com/images/I/51j3fPQTQkL.jpg|https://images-na.ssl-images-amazon.com/images/I/31hKM3cSoSL.jpg|https://images-na.ssl-images-amazon.com/images/I/51WlHdwghfL.jpg|https://images-na.ssl-images-amazon.com/images/I/51FsyLRBzwL.jpg|https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
       "addedBy": "Carleen Osbiston",
       "createdAt": "2024-03-30T00:00:00Z"

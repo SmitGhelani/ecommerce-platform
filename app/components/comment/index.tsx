@@ -1,8 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import formatDateTime from "@/app/utils/formatDateTime";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { comment } from "postcss";
-import { pid } from "process";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -13,6 +11,7 @@ const CommentBox = ({prodId}:any) => {
     const [commentError, setCommentError] = useState("");
     const route = useRouter();
     const user = useSelector((state:any)=> state.user)
+    const [commentSuccess, setCommentSuccess] = useState(false)
 
     const initialValues = {
         comment:""
@@ -29,28 +28,34 @@ const CommentBox = ({prodId}:any) => {
     
 
     useEffect(()=>{
-        axios.post("http://localhost:3000/api/fetchComments",{
+        fetch("http://localhost:3000/api/fetchComments",{method:"POST",body:JSON.stringify({
             productId: pID
-        }).then((response)=>{
-            setCommentData(response.data.comments)
-        }).catch((error)=>{
+        })}).then((response)=>
+            response.json()
+        ).then((data)=>
+            setCommentData(data.comments)
+        ).catch((error)=>{
             console.log(error)
         })
-    },[commentData])
+    },[pID, commentSuccess])
 
     const addComment = async(values:any) => {
-        const commentResponse:AxiosResponse = await axios.post("http://localhost:3000/api/addComment",{
+        console.log(user.user)
+        const commentResponse = await fetch("http://localhost:3000/api/addComment",{method:"POST",body:JSON.stringify({
             "userId": user.user._id,
             "comment": values.comment,
             "productId": pID,
             "username": user.user.name,
             "email": user.user.email
-        })
-
-        if (!commentResponse.data.success){
+        })})
+        const data = await commentResponse.json()
+        console.log(data)
+        if (!data.success){
+            setCommentSuccess(!commentSuccess)
             setCommentError("Your comment is not added")
         }else{
             values.comment = ""
+            setCommentSuccess(!commentSuccess)
         }
     }
     
@@ -60,44 +65,45 @@ const CommentBox = ({prodId}:any) => {
           (formik)=>{
               const {values, errors, touched, handleBlur, handleChange, handleSubmit} = formik;
               return(
-                <div className="w-full bg-white rounded-lg border p-4 my-4">
-                <h3 className="font-bold">Product Reviews</h3>
+                <div className="bg-slate-500 rounded-lg border p-4 my-4 m-5">
+                <h3 className="font-bold text-white">Product Reviews</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col">
                             {
                                 commentData && commentData.map((comment:any)=>(
-                                    <div key={comment._id} className="border rounded-md p-3 ml-3 my-3">
-                                        <div className="flex gap-3 items-center">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4mfcCBaUG6YTp9y_QD0OBm9SVoPZjj_hjT2CQhq17whHvcttXcBJh1nPf-7N-tu-hTAk&usqp=CAU" className="object-cover w-8 h-8 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
-                                            <h3 className="font-bold">
-                                                {comment.username}
-                                            </h3>
+                                    <div key={comment._id} className="flex border bg-zinc-200 rounded-md p-3 ml-3 my-3">
+                                        <img src="https://banner2.cleanpng.com/20180411/due/kisspng-computer-icons-user-profile-info-5acde51e963fe2.9717334815234429746154.jpg" className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
+                                        <div className="flex flex-col gap-3 items-left ml-3 w-full">
+                                            <div className="flex flex-row items-center">
+                                                <h3 className="font-bold">
+                                                    {comment.username}
+                                                </h3>
+                                                <p className="text-sm items-center justify-center ml-3 font-medium text-gray-400">on {formatDateTime(comment.createdAt)}</p>
+                                            </div>
+                                            <p className="text-slate-500 font-normal text-base">
+                                            {comment.comment}
+                                            </p>
                                         </div>
-                                        <p className="text-gray-600 mt-2">
-                                        {comment.comment}
-                                        </p>
                                     </div>
                                 ))
                             }
 
                         </div>
-                        <div className="w-full px-3 my-2">
+                        <div className="flex flex-row w-full p-3 my-2 mr">
                             <textarea
                                 value={values.comment}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                className="bg-gray-100 rounded-full border border-gray-400 leading-normal resize-none w-full h-12 py-2 px-4 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                                 name="comment" placeholder='Type Your Comment' required></textarea>
+                            
+                            <div className="w-1/4 flex justify-end px-3">
+                                <input type='submit' className="bg-slate-100 hover:bg-slate-700 hover:text-white text-black font-bold py-3 px-5 rounded-full" value='Post Comment' />
+                            </div>
+                            {commentError && (
+                              <span style={{color:"red"}} className="error">{commentError}</span>
+                            )}
                         </div>
-                        <div className="w-full flex justify-end px-3">
-                            <input type='submit' className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value='Post Comment' />
-                        </div>
-                        {errors.comment && touched.comment && (
-                          <span style={{color:"red"}} className="error">{comment.password}</span>
-                        )}
-                        {commentError && (
-                          <span style={{color:"red"}} className="error">{commentError}</span>
-                        )}
                     </form>
                 </div>
             );

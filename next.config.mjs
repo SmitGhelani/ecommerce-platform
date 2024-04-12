@@ -21,6 +21,10 @@ const nextConfig = {
           {
             protocol: "https",
             hostname: "as1.ftcdn.net"
+          },
+          {
+            protocol: "https",
+            hostname: "res.cloudinary.com"
           }
         ],
       },

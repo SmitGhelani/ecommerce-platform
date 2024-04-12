@@ -1,18 +1,18 @@
-import axios from "axios";
-import { cookies } from "next/headers"
+import { NextResponse } from "next/server"
 
 const destroyToken = async () => {
-    await axios.delete("http://localhost:3000/api/logout")
-            .then((response) => {
-                if (!response.data.success){
-                    throw new Error(response.data.message)
-                }
-                console.log(response.data.message)
-                return Response.redirect("/")
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
+    await fetch("http://localhost:3000/api/logout", {
+        method: 'DELETE',
+      })
+    .then((response) => response.json())
+    .then((data)=>{
+        if (!data.success){
+            throw new Error(data.message)
+        }
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
 }
 
 export default destroyToken;
