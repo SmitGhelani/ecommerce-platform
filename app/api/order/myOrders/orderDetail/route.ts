@@ -1,7 +1,6 @@
 import { ProductInterface } from "@/app/interfaces/productInterface";
 import { OrderModel } from "@/app/models/orderModel";
 import { ProductModel } from "@/app/models/productModel";
-import { OrderInterface } from "@/app/orders/page";
 import { NextRequest } from "next/server";
 
 const POST = async(req: NextRequest) => {

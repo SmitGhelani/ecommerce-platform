@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import "@/app/lib/data/db";
 import StoreProvider from "./storeProvider";
+import getToken from "./utils/getToken";
+import { redirect } from "next/dist/server/api-utils";
+import { NextRequest } from "next/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +20,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = getToken()
+  if(!token) {
+    return Response.redirect("/login")
+  }
+
   return (
     <StoreProvider>
       <html lang="en">
-        <body>
+        <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossOrigin="anonymous" referrerpolicy="no-referrer" />
+        </head>
+        <body className="bg-slate-200">
           {/* Layout UI */}
           <Navbar/>
             <main>{children}</main>

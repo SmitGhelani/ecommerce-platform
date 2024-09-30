@@ -1,5 +1,6 @@
 import { CommentModel } from "@/app/models/commentsModel";
 import { NextRequest } from "next/server";
+import "../../lib/data/db"
 
 const POST = async(req: NextRequest) => {
     const {productId} = await req.json()

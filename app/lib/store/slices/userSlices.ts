@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 export interface UserState{
-    user: UserInterface
+    user: UserInterface,
+    loggedIn: boolean
 }
 
 const initialState:UserState = {
@@ -15,16 +16,15 @@ const initialState:UserState = {
         password: "",
         role: "user",
         createdAt: ""
-    }
+    },
+    loggedIn: false
 }
 const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
-        addLoggedInUserEmail: (state, action)=>{
-            if (state.user._id === "") {
-                state.user.email = action.payload
-            }
+        toggleAuthentication: (state, action)=>{
+            state.loggedIn = action.payload
         },
         addLoggedInUserData: (state, action)=>{
             state.user = action.payload
@@ -40,4 +40,4 @@ const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer
 
-export const {addLoggedInUserEmail, addLoggedInUserData, removeLoggedInUser, returnState} = userSlice.actions
+export const {toggleAuthentication, addLoggedInUserData, removeLoggedInUser, returnState} = userSlice.actions

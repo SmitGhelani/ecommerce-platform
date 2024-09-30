@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const MainBanner = () => {
     return (
-        <div className="bg-indigo-600">
+        <div className="bg-slate-600">
             <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
                 <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
                     <div>
@@ -16,7 +16,8 @@ const MainBanner = () => {
                         </div>
                     </div>
                     <div className="mt-8 lg:mt-0">
-                        <Image className="rounded-lg shadow-lg w-full" style={{background:"transparent"}} width="300" height="300" src="https://img.freepik.com/free-vector/big-sale-icon-banner-retro-comic-style_1308-157409.jpg?w=900&t=st=1712343094~exp=1712343694~hmac=9e31b3cc2f477482ba799408594e69325daad528c9f219b79b301822e9d45b9d" alt="Seasonal Sale Banner" />
+                        
+                        <Image className="" style={{background:"transparent"}} width="900" height="900" src="https://res.cloudinary.com/den7yrxlt/image/upload/v1712895182/4967121-removebg_nd3ybt.png" alt="Seasonal Sale Banner" />
                     </div>
                 </div>
             </div>

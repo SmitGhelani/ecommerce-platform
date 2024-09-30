@@ -1,13 +1,11 @@
 "use client"
-import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import {useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { addLoggedInUserData } from "../lib/store/slices/userSlices";
-import bcryptjs from "bcryptjs";
+import { addLoggedInUserData, toggleAuthentication } from "../lib/store/slices/userSlices";
 
 interface LoginInterface {
   email: string,
@@ -16,6 +14,7 @@ interface LoginInterface {
 
 const Login = ({email="", password=""}: LoginInterface) => {
 
+    // const token = getToken()
     const route = useRouter();
     const [loginError, setLoginError] = useState("");
     const dispatch = useDispatch()
@@ -42,18 +41,20 @@ const Login = ({email="", password=""}: LoginInterface) => {
       return errors;
     };
     const submitForm = async (values:any) => {
-      const response:AxiosResponse = await axios.post("http://localhost:3000/api/login",
-        {
+      const response = await fetch("http://localhost:3000/api/login",{method:"POST",body:JSON.stringify({
             email: values.email,
             password: values.password
-        })
+        })})
 
-        if (!response.data.success){
+        const data = await response.json()
+
+        if (!data.success){
           // route.push('/login');
-          setLoginError(response.data.message)
+          setLoginError(data.message)
         }else{
-          dispatch(addLoggedInUserData(response.data.currentUser))
+          dispatch(addLoggedInUserData(data.currentUser))
           localStorage.setItem("loggedInUser", user.user)
+          dispatch(toggleAuthentication(true))
           route.push('/')
         }
     };
@@ -64,7 +65,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
           (formik)=>{
               const {values, errors, touched, handleBlur, handleChange, handleSubmit} = formik;
               return(
-                <div className="flex items-center min-h-screen bg-gray-100">
+                <div className="flex items-center min-h-screen bg-zinc-300">
                     <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                         <div className="flex flex-col md:flex-row">
                             <div className="h-32 md:h-auto md:w-1/2">
@@ -75,23 +76,23 @@ const Login = ({email="", password=""}: LoginInterface) => {
                                     <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">Login to Your Account</h1>
                                     <form onSubmit={handleSubmit}>
                                         <div>
-                                            <label className="block text-sm">Email</label>
-                                            <input type="email" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="name@example.com" />
+                                            <label className="block text-sm font-medium">Email</label>
+                                            <input type="email" name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="name@example.com" />
                                             {errors.email && touched.email && (
                                               <span style={{color:"red"}} className="error">{errors.email}</span>
                                             )}
                                         </div>
                                             
                                         <div className="mt-4">
-                                            <label className="block text-sm">Password</label>
-                                            <input type="password" name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
+                                            <label className="block font-medium">Password</label>
+                                            <input type="password" name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="***************" autoComplete="off" />
                                             {errors.password && touched.password && (
                                               <span style={{color:"red"}} className="error">{errors.password}</span>
                                             )}
                                         </div>
                                             
                                         <div className="mt-6">
-                                            <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                                            <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-slate-600 rounded-md hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-300">
                                                 Log in
                                             </button>
                                         </div>
@@ -100,7 +101,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
                                         )}
                                     </form>
                                             
-                                    <p className="mt-4 text-xs text-center text-gray-600">Do not have an account? <Link href="register" className="text-indigo-600 hover:underline">Sign up</Link></p>
+                                    <p className="mt-4 text-xs text-center text-gray-600">Do not have an account? <Link href="register" className="text-zinc-800 hover:underline">Sign up</Link></p>
                                 </div>
                             </div>
                         </div>
