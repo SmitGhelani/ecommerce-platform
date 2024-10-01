@@ -15,12 +15,12 @@ const cartSlice = createSlice({
     initialState: initialState,
     reducers: {
         addToCart: (state, action) => {
-            const itemExists = state.items.find((item)=> item.product.productId == action.payload._id); 
+            const itemExists = state.items.find((item)=> item.product._id == action.payload._id); 
             if(itemExists) {
                 itemExists.quantity++;
             }else{
                 state.items.push({product:{
-                        productId: action.payload._id,
+                        _id: action.payload._id,
                         features: {
                             Color: action.payload.features.Color,
                             Size: action.payload.features.Size,
@@ -39,16 +39,16 @@ const cartSlice = createSlice({
             }
         },
         increaseQuantity: (state, action) => {
-            const item = state.items.find((item)=> item.product.productId == action.payload)
+            const item = state.items.find((item)=> item.product._id == action.payload)
             if(item) {
                 item.quantity++;
             }
         },
         decreaseQuantity: (state, action) =>{
-            const item = state.items.find((item)=>item.product.productId == action.payload)
+            const item = state.items.find((item)=>item.product._id == action.payload)
             if(item) {
                 if(item.quantity == 1) {
-                    const index = state.items.findIndex((item)=>item.product.productId == action.payload)
+                    const index = state.items.findIndex((item)=>item.product._id == action.payload)
                     state.items.splice(index, 1);
                 } else {
                     item.quantity--;
@@ -56,7 +56,7 @@ const cartSlice = createSlice({
             }  
         },
         removeFromCart : (state, action) =>{
-            const index = state.items.findIndex((item) =>  item.product.productId == action.payload)
+            const index = state.items.findIndex((item) =>  item.product._id == action.payload)
 
             state.items.splice(index, 1)
         },

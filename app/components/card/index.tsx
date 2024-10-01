@@ -14,7 +14,7 @@ const Card = ({productData}:{productData:any}) => {
     useEffect(()=> {
 
         if (cart.items.length > 0){
-            const itemfromCart = cart.items.find((item:ItemInterface)=>item.product.productId == productData._id)
+            const itemfromCart = cart.items.find((item:ItemInterface)=>item.product._id == productData._id)
             if (itemfromCart){
                 setItemsInCart(itemfromCart.quantity)
                 
@@ -81,7 +81,7 @@ const Card = ({productData}:{productData:any}) => {
                                 </div>
                             </div>
                             <div className="w-2/4 text-right">
-                            <span className="text-gray-600 w-full items-center justify-center text-right mr-5 text-xl text-white">£{productData && productData.price ? productData.price : ""}</span>
+                            <span className="w-full items-center justify-center text-right mr-5 text-xl text-white">£{productData && productData.price ? productData.price : ""}</span>
                             </div>
                             
                         </div>

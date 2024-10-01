@@ -66,7 +66,7 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
 
     useEffect(()=>{
         if (cart.items.length > 0){
-            const itemfromCart = cart.items.find((item:ItemInterface)=>item.product.productId == productData._id)
+            const itemfromCart = cart.items.find((item:ItemInterface)=>item.product._id == productData._id)
             if (itemfromCart){
                 setItemsInCart(itemfromCart.quantity)
                 const btn = document.getElementById(`addtocartbtn_${productData._id}`)
@@ -86,7 +86,7 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
                     <Image className="object-cover w-2/4 rounded-lg md:w-56" height="5000" width="5600" src={productData.image} alt="Product Name" />
                 </div>
                 <div className="mt-4 md:mt-0 md:ml-6">
-                    <h1 className="text-xl font-bold text-gray-900">{productData.product_name}</h1>
+                    <h1 className="text-xl font-bold text-gray-900">{productData.name}</h1>
                     <p className="mt-2 text-gray-600">{productData.description}</p>
                     <div className="mt-3">
                         <span className="text-gray-500">Price:</span>

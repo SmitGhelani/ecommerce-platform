@@ -1,10 +1,10 @@
 export interface ProductInterface {
-    productId: string,
+    _id: string,
     features: {
         Color: string,
         Size: string,
         Material: string
-    }
+    },
     product_name: string,
     description: string,
     price: number,

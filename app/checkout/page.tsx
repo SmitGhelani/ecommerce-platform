@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ItemInterface } from "../interfaces/itemInterface";
 import { destroyCart } from "../lib/store/slices/cartSlice";
+import { error } from "console";
 
 const Checkout = () => {
 
@@ -15,7 +16,7 @@ const Checkout = () => {
     const route = useRouter()
     const dispatch = useDispatch()
 
-    const initialValues = {
+    const initialValues:{name:string, email: string, shippingAddress: string} = {
       name: user.user.name,
       email: user.user.email,
       shippingAddress: ""

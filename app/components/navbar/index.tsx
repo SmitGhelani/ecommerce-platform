@@ -37,7 +37,7 @@ const Navbar = () => {
                 <div className="flex justify-between h-16">
                     <div className="flex">
                         <div className="-ml-2 mr-2 flex items-center">
-                            <Link href="/" className="text-lg font-semibold text-gray-900 text-slate-100">eCommerce Store</Link>
+                            <Link href="/" className="text-lg font-semibold">eCommerce Store</Link>
                         </div>
                     </div>
                     <div></div>
@@ -45,19 +45,19 @@ const Navbar = () => {
                     {
                             user.loggedIn && 
                         <div className="flex items-center">
-                            <Link href="/products" className="text-gray-100 hover:text-gray-600 hover:bg-slate-300 p-3 hover:text-slate-900 rounded">Products</Link>
+                            <Link href="/products" className="text-gray-100  hover:bg-slate-300 p-3 hover:text-slate-900 rounded">Products</Link>
                         </div>
                     }
                     {
                             user.loggedIn && 
                         <div className="flex items-center">
-                            <Link href="/orders" className="text-gray-100 hover:text-gray-600 hover:bg-slate-300 p-3 hover:text-slate-900 rounded">My Orders</Link>
+                            <Link href="/orders" className="text-gray-100  hover:bg-slate-300 p-3 hover:text-slate-900 rounded">My Orders</Link>
                         </div>
                     }
                     {
                         user.loggedIn && 
                         <div className="flex items-center">
-                            <Link href="/cart" className="text-gray-100 hover:text-gray-600 hover:bg-slate-300 p-3 hover:text-slate-900 rounded ">Cart</Link>
+                            <Link href="/cart" className="text-gray-100  hover:bg-slate-300 p-3 hover:text-slate-900 rounded ">Cart</Link>
                         </div>
                     }
                     <div className="flex items-center">
