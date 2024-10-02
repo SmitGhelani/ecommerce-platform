@@ -7,7 +7,6 @@ const validateAuthentication = () => {
     fetch("https://ecommerce.smitghelani.xyz/api/user/validateAuth")
         .then((response) => response.json())
         .then((data)=>{
-            console.log(data)
             if (data.isAuthenticated) {
                 appStore.dispatch(addLoggedInUserData(data.currentUser))
                 appStore.dispatch(toggleAuthentication(data.isAuthenticated))
