@@ -1,9 +1,10 @@
 "use client"
 import { useEffect, useState } from "react"
+import { NextRequest } from "next/server"
 import Card from "../components/card"
 import validateAuthentication from "../utils/validateAuthentication"
 
-const Products = () => {
+const Products = (req: NextRequest) => {
 
     const [productData, setProductData] = useState([])
     const [search,setSearch] = useState("")
@@ -16,6 +17,7 @@ const Products = () => {
 
     useEffect(() => {
         validateAuthentication();
+        console.log(req.cookies.get("token")?.value)
         
         if (filter == "All"){
             setFilter("")
