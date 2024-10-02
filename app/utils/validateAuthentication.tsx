@@ -7,9 +7,14 @@ const validateAuthentication = () => {
     fetch("https://ecommerce.smitghelani.xyz/api/user/validateAuth")
         .then((response) => response.json())
         .then((data)=>{
-            appStore.dispatch(addLoggedInUserData(data.currentUser))
-            appStore.dispatch(toggleAuthentication(data.isAuthenticated))
-            NextResponse.next()
+            if (data.isAuthenticated) {
+                appStore.dispatch(addLoggedInUserData(data.currentUser))
+                appStore.dispatch(toggleAuthentication(data.isAuthenticated))
+                NextResponse.next()
+            } else {
+                appStore.dispatch(toggleAuthentication(data.isAuthenticated))
+                Response.redirect("/signin")
+            }
         })
         .catch((error) => {
             console.log(error)
