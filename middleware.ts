@@ -6,7 +6,7 @@ const middleware = async (req: NextRequest) => {
     try {
         const token = req.cookies.get("token")?.value;
         const isLoggedIn = token && ( await verifyToken(token))
-        
+        console.log(isLoggedIn)
         if (isLoggedIn) {
             const decoded = jwtDecode(token);
             if (decoded) {
