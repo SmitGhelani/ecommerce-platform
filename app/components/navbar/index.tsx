@@ -37,7 +37,7 @@ const Navbar = () => {
                 <div className="flex justify-between h-16">
                     <div className="flex">
                         <div className="-ml-2 mr-2 flex items-center">
-                            <Link href="/" className="text-lg font-semibold">eCommerce Store</Link>
+                            <Link href="/" className="text-lg font-semibold text-gray-100">eCommerce Store</Link>
                         </div>
                     </div>
                     <div></div>
@@ -68,7 +68,7 @@ const Navbar = () => {
                                 Logout
                             </button>
                             :
-                            <Link href="/login" className="text-gray-900 hover:text-gray-600">
+                            <Link href="/signin" className="text-gray-900 hover:text-gray-600">
                                 <button className="bg-slate-100 hover:bg-slate-700 hover:text-white text-black font-bold py-3 px-5 rounded-full">
                                     Login
                                 </button>

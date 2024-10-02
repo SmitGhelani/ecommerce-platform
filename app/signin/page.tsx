@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addLoggedInUserData, toggleAuthentication } from "../lib/store/slices/userSlices";
 
 interface LoginInterface {
-  email: string,
-  password: string
+  email?: string;
+  password?: string;
 }
 
-const Login = ({email="", password=""}: LoginInterface) => {
+const Signin = () => {
 
     // const token = getToken()
     const route = useRouter();
@@ -20,9 +20,9 @@ const Login = ({email="", password=""}: LoginInterface) => {
     const dispatch = useDispatch()
     const user = useSelector((state:any)=> state.user)
 
-    const initialValues = {
-        email: email,
-        password: password
+    const initialValues: LoginInterface = {
+        email: "",
+        password: ""
       };
 
     const validate = (values:any) => {
@@ -49,7 +49,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
         const data = await response.json()
 
         if (!data.success){
-          // route.push('/login');
+          // route.push('/signin');
           setLoginError(data.message)
         }else{
           dispatch(addLoggedInUserData(data.currentUser))
@@ -101,7 +101,7 @@ const Login = ({email="", password=""}: LoginInterface) => {
                                         )}
                                     </form>
                                             
-                                    <p className="mt-4 text-xs text-center text-gray-600">Do not have an account? <Link href="register" className="text-zinc-800 hover:underline">Sign up</Link></p>
+                                    <p className="mt-4 text-xs text-center text-gray-600">Do not have an account? <Link href="signup" className="text-zinc-800 hover:underline">Sign up</Link></p>
                                 </div>
                             </div>
                         </div>
@@ -113,4 +113,4 @@ const Login = ({email="", password=""}: LoginInterface) => {
     )
 }
 
-export default Login;
+export default Signin;

@@ -67,7 +67,7 @@ const Checkout = () => {
       const data = await response.json()
 
         if (!data.success){
-          // route.push('/login');
+          // route.push('/signin');
           setCartError(data.message)
         }else{
           setCartSuccess("Order Placed Successfully!!!");

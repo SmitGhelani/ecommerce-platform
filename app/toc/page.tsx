@@ -18,8 +18,8 @@ const TOC = () => {
                 <li><Link href="cart" className="text-slate-600 hover:underline">Cart Page</Link></li>
                 <li><Link href="orders" className="text-slate-600 hover:underline">Orders Page</Link></li>
                 {/* <li><Link href="order-details" className="text-slate-600 hover:underline">Order Detail Page</Link></li> */}
-                <li><Link href="login" className="text-slate-600 hover:underline">Login Page</Link></li>
-                <li><Link href="register" className="text-slate-600 hover:underline">Registration Page</Link></li>
+                <li><Link href="signin" className="text-slate-600 hover:underline">Login Page</Link></li>
+                <li><Link href="signup" className="text-slate-600 hover:underline">Registration Page</Link></li>
                 <li><Link href="checkout" className="text-slate-600 hover:underline">Checkout Page</Link></li>
             </ul>
         </div>

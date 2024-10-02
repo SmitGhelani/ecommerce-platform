@@ -14,7 +14,7 @@ const POST = async (req:NextRequest) => {
     }
 
     try{
-        const productData = await ProductModel.findOne({_id:id});
+        const productData = await ProductModel.findById(id);
 
         if(!productData){
             return Response.json({

@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   const token = getToken();
   if (!token) {
-    return Response.redirect("/login");
+    return Response.redirect("/signin");
   }
 
   return (

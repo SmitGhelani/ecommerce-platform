@@ -13,7 +13,7 @@ const validateAuthentication = () => {
                 NextResponse.next()
             } else {
                 appStore.dispatch(toggleAuthentication(data.isAuthenticated))
-                Response.redirect("/login")
+                Response.redirect("/signin")
             }
         })
         .catch((error) => {
