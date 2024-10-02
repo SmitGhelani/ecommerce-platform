@@ -54,7 +54,7 @@ const Signup = () => {
     };
 
     const submitForm = async (values: any) => {
-        const response = await fetch("http://localhost:3000/api/register", {
+        const response = await fetch("http://${process.env.SECRET_KEY}/api/register", {
             method: "POST",
             body: JSON.stringify({
                 name: values.name,

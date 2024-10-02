@@ -53,7 +53,7 @@ const Checkout = () => {
     }
 
     const placeOrder = async (values: any) => {
-      const response = await fetch("http://localhost:3000/api/order",{method:"POST",body:JSON.stringify({
+      const response = await fetch("http://${process.env.SECRET_KEY}/api/order",{method:"POST",body:JSON.stringify({
         "name": values.name,
         "email": values.email,
         "shippingAddress": values.shippingAddress,

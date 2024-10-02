@@ -41,7 +41,7 @@ const Signin = () => {
       return errors;
     };
     const submitForm = async (values:any) => {
-      const response = await fetch("http://localhost:3000/api/login",{method:"POST",body:JSON.stringify({
+      const response = await fetch("http://${process.env.SECRET_KEY}/api/login",{method:"POST",body:JSON.stringify({
             email: values.email,
             password: values.password
         })})

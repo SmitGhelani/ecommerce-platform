@@ -28,7 +28,7 @@ const CommentBox = ({prodId}:any) => {
     
 
     useEffect(()=>{
-        fetch("http://localhost:3000/api/fetchComments",{method:"POST",body:JSON.stringify({
+        fetch(`http://${process.env.SECRET_KEY}/api/fetchComments`,{method:"POST",body:JSON.stringify({
             productId: pID
         })}).then((response)=>
             response.json()
@@ -41,7 +41,7 @@ const CommentBox = ({prodId}:any) => {
 
     const addComment = async(values:any) => {
         console.log(user.user)
-        const commentResponse = await fetch("http://localhost:3000/api/addComment",{method:"POST",body:JSON.stringify({
+        const commentResponse = await fetch("http://${process.env.SECRET_KEY}/api/addComment",{method:"POST",body:JSON.stringify({
             "userId": user.user._id,
             "comment": values.comment,
             "productId": pID,
