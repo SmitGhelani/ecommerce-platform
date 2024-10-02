@@ -52,9 +52,9 @@ const Signin = () => {
           // route.push('/signin');
           setLoginError(data.message)
         }else{
-          dispatch(addLoggedInUserData(data.currentUser))
-          localStorage.setItem("loggedInUser", user.user)
-          dispatch(toggleAuthentication(true))
+          await dispatch(addLoggedInUserData(data.currentUser))
+          await localStorage.setItem("loggedInUser", user.user)
+          await dispatch(toggleAuthentication(true))
           route.push('/')
         }
     };
