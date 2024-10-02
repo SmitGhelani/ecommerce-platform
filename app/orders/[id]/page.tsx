@@ -37,7 +37,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
         
         validateAuthentication();
 
-        fetch("http://${process.env.SECRET_KEY}/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
+        fetch("https://${process.env.SECRET_KEY}/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
             oid: id
         })}).then((response)=>response.json())
         .then((data)=>{

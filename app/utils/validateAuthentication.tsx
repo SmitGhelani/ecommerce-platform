@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 const validateAuthentication = () => {
     
-    fetch("http://${process.env.SECRET_KEY}/api/user/validateAuth")
+    fetch("https://${process.env.SECRET_KEY}/api/user/validateAuth")
         .then((response) => response.json())
         .then((data)=>{
             if (data.isAuthenticated) {

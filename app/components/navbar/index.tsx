@@ -12,7 +12,7 @@ const Navbar = () => {
     const route = useRouter()
 
     useEffect(() => {
-        fetch("http://${process.env.SECRET_KEY}/api/user/validateAuth")
+        fetch("https://${process.env.SECRET_KEY}/api/user/validateAuth")
             .then((response) => response.json())
             .then((data)=>{
                 dispatch(addLoggedInUserData(data.currentUser))
