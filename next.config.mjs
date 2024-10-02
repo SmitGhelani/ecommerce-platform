@@ -39,7 +39,7 @@ const nextConfig = {
                 source: "/api/:path*",
                 headers: [
                     { key: "Access-Control-Allow-Credentials", value: "true" },
-                    { key: "Access-Control-Allow-Origin", value: "https://ecommerce.smitghelani.xyz" }, // replace this your actual origin
+                    { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
                     { key: "Access-Control-Allow-Methods", value: "*" },
                     { key: "Access-Control-Allow-Headers", value: "*" },
                 ]
