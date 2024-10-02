@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useState } from "react"
-import { NextRequest } from "next/server"
 import Card from "../components/card"
 import validateAuthentication from "../utils/validateAuthentication"
+import { useSelector } from "react-redux"
 
-const Products = (req: NextRequest) => {
+const Products = () => {
 
     const [productData, setProductData] = useState([])
     const [search,setSearch] = useState("")
@@ -13,11 +13,11 @@ const Products = (req: NextRequest) => {
     const [end, setEnd] = useState(12)
     const productCategories = ["All", "Toys", "Sports", "Clothing", "HomeKitchen", "BabyProduct", "Games", "PetSupplies", "Jewelry", "Accessories", "ArtsCrafts"]
     const [productsCount, setProductsCount] = useState(0)
-
+    const user = useSelector((state:any)=> state.user)
 
     useEffect(() => {
         validateAuthentication();
-        console.log(req.cookies.get("token")?.value)
+        console.log(user)
         
         if (filter == "All"){
             setFilter("")

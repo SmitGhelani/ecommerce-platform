@@ -40,7 +40,6 @@ const CommentBox = ({prodId}:any) => {
     },[pID, commentSuccess])
 
     const addComment = async(values:any) => {
-        console.log(user.user)
         const commentResponse = await fetch("https://ecommerce.smitghelani.xyz/api/addComment",{method:"POST",body:JSON.stringify({
             "userId": user.user._id,
             "comment": values.comment,
