@@ -50,7 +50,7 @@ const ProductDetails = ({params}:{params:{id:string}}) => {
 
     useEffect(() => {
         validateAuthentication();
-        fetch("https://${process.env.DOMAIN_NAMES}/api/productDetails",{method:"POST",body:JSON.stringify({
+        fetch("https://ecommerce.smitghelani.xyz/api/productDetails",{method:"POST",body:JSON.stringify({
             "id":id
         })}).then((result)=> result.json())
         .then((data)=>{

@@ -21,7 +21,7 @@ const Products = () => {
             setFilter("")
         }
 
-        fetch(`https://${process.env.DOMAIN_NAMES}/api/products${
+        fetch(`https://ecommerce.smitghelani.xyz/api/products${
             filter !=="" ? (search !== "" ? `?name=${search}&category=${filter}`: `?category=${filter}`) : (search !== "" ? `?name=${search}`: "")
         }`)
         .then((response)=> response.json())

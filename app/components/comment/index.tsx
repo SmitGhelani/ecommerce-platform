@@ -28,7 +28,7 @@ const CommentBox = ({prodId}:any) => {
     
 
     useEffect(()=>{
-        fetch(`https://${process.env.DOMAIN_NAMES}/api/fetchComments`,{method:"POST",body:JSON.stringify({
+        fetch(`https://ecommerce.smitghelani.xyz/api/fetchComments`,{method:"POST",body:JSON.stringify({
             productId: pID
         })}).then((response)=>
             response.json()
@@ -41,7 +41,7 @@ const CommentBox = ({prodId}:any) => {
 
     const addComment = async(values:any) => {
         console.log(user.user)
-        const commentResponse = await fetch("https://${process.env.DOMAIN_NAMES}/api/addComment",{method:"POST",body:JSON.stringify({
+        const commentResponse = await fetch("https://ecommerce.smitghelani.xyz/api/addComment",{method:"POST",body:JSON.stringify({
             "userId": user.user._id,
             "comment": values.comment,
             "productId": pID,

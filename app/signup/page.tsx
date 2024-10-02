@@ -54,7 +54,7 @@ const Signup = () => {
     };
 
     const submitForm = async (values: any) => {
-        const response = await fetch("https://${process.env.DOMAIN_NAMES}/api/register", {
+        const response = await fetch("https://ecommerce.smitghelani.xyz/api/register", {
             method: "POST",
             body: JSON.stringify({
                 name: values.name,

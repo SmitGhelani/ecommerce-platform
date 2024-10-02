@@ -37,7 +37,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
         
         validateAuthentication();
 
-        fetch("https://${process.env.DOMAIN_NAMES}/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
+        fetch("https://ecommerce.smitghelani.xyz/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
             oid: id
         })}).then((response)=>response.json())
         .then((data)=>{
