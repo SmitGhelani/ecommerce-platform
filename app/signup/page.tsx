@@ -70,6 +70,7 @@ const Signup = () => {
             dispatch(addLoggedInUserData(data.currentUser));
             localStorage.setItem("loggedInUser", user.user);
             dispatch(toggleAuthentication(true));
+            window.document.location.reload()
             route.push('/');
         }
     };
