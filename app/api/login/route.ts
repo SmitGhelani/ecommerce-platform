@@ -51,7 +51,7 @@ const POST = async (req:NextRequest) => {
     },
         {
             headers: {
-                "set-cookie": `token=${token}; HttpOnly; Secure; Path=/; Max-Age=${1 * 60 * 60}; SameSite=None`
+                'Set-Cookie': `token=${token}; HttpOnly; Secure; Path=/; Max-Age=${1 * 60 * 60}; SameSite=None`
             }
         }
     )
