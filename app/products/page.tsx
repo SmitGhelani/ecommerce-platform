@@ -17,7 +17,6 @@ const Products = () => {
 
     useEffect(() => {
         validateAuthentication();
-        console.log(user)
         
         if (filter == "All"){
             setFilter("")

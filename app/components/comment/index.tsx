@@ -48,7 +48,6 @@ const CommentBox = ({prodId}:any) => {
             "email": user.user.email
         })})
         const data = await commentResponse.json()
-        console.log(data)
         if (!data.success){
             setCommentSuccess(!commentSuccess)
             setCommentError("Your comment is not added")
