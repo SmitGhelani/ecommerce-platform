@@ -3,9 +3,10 @@ import { Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedInUserData, toggleAuthentication } from "../lib/store/slices/userSlices";
+import validateAuthentication from "../utils/validateAuthentication";
 
 interface RegisterInterface {
     name?: string,
@@ -19,6 +20,10 @@ const Signup = () => {
     const [signupError, setSignupError] = useState("");
     const user = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
+
+    useEffect(()=> {
+        validateAuthentication();
+    }, []);
 
     const initialValues: RegisterInterface = {
         name: "",

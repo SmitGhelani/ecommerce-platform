@@ -2,10 +2,11 @@
 import { Formik } from "formik";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedInUserData, toggleAuthentication } from "../lib/store/slices/userSlices";
+import validateAuthentication from "../utils/validateAuthentication";
 
 interface LoginInterface {
   email?: string;
@@ -20,6 +21,9 @@ const Signin = () => {
     const dispatch = useDispatch()
     const user = useSelector((state:any)=> state.user)
 
+    useEffect(()=> {
+      validateAuthentication();
+    },[])
     const initialValues: LoginInterface = {
         email: "",
         password: ""
