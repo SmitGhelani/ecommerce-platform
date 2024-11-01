@@ -55,8 +55,7 @@ const Signin = () => {
           await dispatch(addLoggedInUserData(data.currentUser))
           await localStorage.setItem("loggedInUser", user.user)
           await dispatch(toggleAuthentication(true))
-          window.document.location.reload()
-          route.push('/')
+          window.document.location.href = "https://ecommerce.smitghelani.xyz/"
         }
     };
 
