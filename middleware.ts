@@ -20,7 +20,7 @@ const middleware = async (req: NextRequest) => {
     } catch (error) {
         console.log(error)
         const url = req.nextUrl.clone()
-        url.pathname = '/cart'
+        url.pathname = '/signin'
         return NextResponse.redirect(url)
     }
 }
