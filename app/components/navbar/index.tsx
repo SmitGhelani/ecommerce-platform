@@ -43,7 +43,7 @@ const Navbar = () => {
                     <div></div>
                     <div></div>
                     {
-                            user.loggedIn &&
+                        user.loggedIn && 
                         <div className="flex items-center">
                             <Link href="/products" className="text-gray-100  hover:bg-slate-300 p-3 hover:text-slate-900 rounded">Products</Link>
                         </div>
