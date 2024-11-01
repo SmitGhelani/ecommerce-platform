@@ -60,7 +60,6 @@ const Signin = () => {
           await localStorage.setItem("loggedInUser", user.user)
           await dispatch(toggleAuthentication(true))
           route.push("/")
-          location.reload();
         }
     };
 
