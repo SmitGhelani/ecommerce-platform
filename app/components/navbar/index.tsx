@@ -16,7 +16,7 @@ const Navbar = () => {
             .then((response) => response.json())
             .then((data)=>{
                 dispatch(addLoggedInUserData(data.currentUser))
-                dispatch(toggleAuthentication(true))
+                dispatch(toggleAuthentication(data.isAuthenticated))
             })
             .catch((error)=> {
                 console.log(error)
@@ -43,7 +43,7 @@ const Navbar = () => {
                     <div></div>
                     <div></div>
                     {
-                            user.loggedIn && setTimeout(()=>{},200) &&
+                            user.loggedIn &&
                         <div className="flex items-center">
                             <Link href="/products" className="text-gray-100  hover:bg-slate-300 p-3 hover:text-slate-900 rounded">Products</Link>
                         </div>

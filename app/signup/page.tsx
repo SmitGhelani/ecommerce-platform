@@ -70,7 +70,7 @@ const Signup = () => {
             dispatch(addLoggedInUserData(data.currentUser));
             localStorage.setItem("loggedInUser", user.user);
             dispatch(toggleAuthentication(true));
-            window.document.location.href = "https://ecommerce.smitghelani.xyz/"
+            route.push("/");
         }
     };
 

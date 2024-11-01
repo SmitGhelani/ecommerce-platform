@@ -1,7 +1,7 @@
 "use client"
 import { Formik } from "formik";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,7 +55,7 @@ const Signin = () => {
           await dispatch(addLoggedInUserData(data.currentUser))
           await localStorage.setItem("loggedInUser", user.user)
           await dispatch(toggleAuthentication(true))
-          window.document.location.href = "https://ecommerce.smitghelani.xyz/"
+          route.push("/")
         }
     };
 
