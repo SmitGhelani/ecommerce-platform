@@ -35,7 +35,7 @@ const Products = () => {
         .catch((error)=>{
             console.log(error)
         })
-    },[search, filter, productsCount]);
+    },[search, filter, productsCount, user.user]);
 
     const setFilterClass = (e:any, type:any) => {
         if (type !== "All") {
