@@ -1,5 +1,5 @@
 import verifyToken from "@/app/utils/verifyToken"
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server"
 
 const middleware = async (req: NextRequest) => {
@@ -20,7 +20,7 @@ const middleware = async (req: NextRequest) => {
     } catch (error) {
         console.log(error)
         const url = req.nextUrl.clone()
-        url.pathname = '/signin'
+        url.pathname = '/cart'
         return NextResponse.redirect(url)
     }
 }
