@@ -22,7 +22,7 @@ const Products = () => {
             setFilter("")
         }
 
-        fetch(`https://ecommerce.smitghelani.xyz/api/products${
+        fetch(`http://localhost:3000/api/products${
             filter !=="" ? (search !== "" ? `?name=${search}&category=${filter}`: `?category=${filter}`) : (search !== "" ? `?name=${search}`: "")
         }`)
         .then((response)=> response.json())

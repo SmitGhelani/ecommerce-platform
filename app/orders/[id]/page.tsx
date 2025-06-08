@@ -10,6 +10,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
     const [orderData, setOrderData] = useState<OrderInterface>({
         _id: "",
         shippingAddress: "",
+        contactno: 0,
         orderSummary: [{
             product: {
                 _id: "",
@@ -37,7 +38,7 @@ const OrderDetails = ({params}: {params:{id:string}}) =>{
         
         validateAuthentication();
 
-        fetch("https://ecommerce.smitghelani.xyz/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
+        fetch("http://localhost:3000/api/order/myOrders/orderDetail",{method:"POST",body:JSON.stringify({
             oid: id
         })}).then((response)=>response.json())
         .then((data)=>{

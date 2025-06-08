@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 const validateAuthentication = () => {
     
-    fetch("https://ecommerce.smitghelani.xyz/api/user/validateAuth")
+    fetch("http://localhost:3000/api/user/validateAuth")
         .then((response) => response.json())
         .then((data)=>{
             if (data.isAuthenticated) {

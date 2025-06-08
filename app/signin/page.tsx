@@ -45,7 +45,7 @@ const Signin = () => {
       return errors;
     };
     const submitForm = async (values:any) => {
-      const response = await fetch("https://ecommerce.smitghelani.xyz/api/login",{method:"POST",body:JSON.stringify({
+      const response = await fetch("http://localhost:3000/api/login",{method:"POST",body:JSON.stringify({
             email: values.email,
             password: values.password
         })})

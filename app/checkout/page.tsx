@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ItemInterface } from "../interfaces/itemInterface";
 import { destroyCart } from "../lib/store/slices/cartSlice";
 import { error } from "console";
+import Razorpay from "razorpay";
 
 const Checkout = () => {
 
@@ -13,6 +14,7 @@ const Checkout = () => {
     const user= useSelector((state:any) => state.user)
     const [cartError, setCartError] = useState("")
     const [cartSuccess, setCartSuccess] = useState("")
+    const [paymentStatus, setPaymentStatus] = useState(false)
     const route = useRouter()
     const dispatch = useDispatch()
 
@@ -35,11 +37,19 @@ const Checkout = () => {
       } else if (!regex.test(values.email)) {
         errors.email = "Invalid Email";
       }
+
+      // if (!values.contactno) {
+      //   errors.contactno = "Contact No is required";
+      // } else if (values.contactno < 1000000000 || values.contactno > 9999999999 ) {
+      //   errors.contactno = "Invalid Contact No";
+      // }
+
       if (!values.shippingAddress) {
           errors.shippingAddress = "Shipping Address is required";
       } else if (values.shippingAddress.length < 8) {
           errors.shippingAddress = "Shipping Address too short";
       }
+
       return errors;
     };
 
@@ -53,26 +63,53 @@ const Checkout = () => {
     }
 
     const placeOrder = async (values: any) => {
-      const response = await fetch("https://ecommerce.smitghelani.xyz/api/order",{method:"POST",body:JSON.stringify({
-        "name": values.name,
-        "email": values.email,
-        "shippingAddress": values.shippingAddress,
-        "orderDetails": cart.items,
-        "totalCartValue": totalBillAmout(),
-        "userDetails": {
-            "_id": user.user._id
-        }
-      })})
-      
-      const data = await response.json()
+      try {
+        const response = await fetch("http://localhost:3000/api/order",{method:"POST",body:JSON.stringify({
+          "name": values.name,
+          "email": values.email,
+          "shippingAddress": values.shippingAddress,
+          "orderDetails": cart.items,
+          "totalCartValue": totalBillAmout(),
+          "userDetails": {
+              "_id": user.user._id
+          }
+        })})
+        
+        const data = await response.json()
 
         if (!data.success){
           // route.push('/signin');
           setCartError(data.message)
         }else{
-          setCartSuccess("Order Placed Successfully!!!");
+          const options = {
+            "key": process.env.RAZORPAY_API_KEY, // Enter the Key ID generated from the Dashboard
+            "amount": "1", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Smit E-commerce site", //your business name
+            "description": "Payment gateway for the E-commerce store",
+            "image": "https://example.com/your_logoicons8-big-sale-64.png",
+            "order_id": data.order._id,
+            "handler": async function (res: any) {
+              console.log(res)
+            },
+            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+                "name": values.name, //your customer's name
+                "email": values.email
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+          };  
+          const razorpayObject = new Razorpay(options);
+          razorpayObject.open();
           dispatch(destroyCart())
         }
+      } catch{
+        setCartError("Payment Failed.")
+      }
     }
 
     return (
@@ -117,10 +154,28 @@ const Checkout = () => {
                               placeholder="you@example.com"
                               required
                             />
-                          </div>
-                          {errors.email && touched.email && (
+                            {errors.email && touched.email && (
                             <span style={{color:"red"}} className="error">{errors.email}</span>
                           )}
+                          </div>
+                          {/* <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2"
+                              >Contact No
+                            </label>
+                            <input
+                              type="number"
+                              className="block w-full h-5 p-5  mt-1 text-sm border-gray-800 rounded-md shadow-sm focus:border-grey-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              name="contactno"
+                              value={values.contactno}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="981 238 2111"
+                              required
+                            />
+                            {errors.contactno && touched.contactno && (
+                              <span style={{color:"red"}} className="error">{errors.contactno}</span>
+                            )}
+                          </div> */}
                           <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2"
                               >Shipping Address

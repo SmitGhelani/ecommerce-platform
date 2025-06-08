@@ -4,7 +4,7 @@ import * as EmailValidator from "email-validator";
 import "../../lib/data/db"
 
 const POST = async (req: NextRequest) => { 
-    const {name, email, shippingAddress, orderDetails, totalCartValue, userDetails} = await req.json()
+    const {name, email, shippingAddress ,orderDetails, totalCartValue, userDetails} = await req.json()
 
     if (!name) {
         return Response.json({
@@ -26,6 +26,7 @@ const POST = async (req: NextRequest) => {
             message: "Shipping Address in requied to make order"
         })
     }
+    
     if (!orderDetails || orderDetails.length == 0) {
         return Response.json({
             success: false,

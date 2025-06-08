@@ -12,7 +12,7 @@ const Navbar = () => {
     const route = useRouter()
 
     useEffect(() => {
-        fetch("https://ecommerce.smitghelani.xyz/api/user/validateAuth")
+        fetch("http://localhost:3000/api/user/validateAuth")
             .then((response) => response.json())
             .then((data)=>{
                 dispatch(addLoggedInUserData(data.currentUser))

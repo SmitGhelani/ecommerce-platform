@@ -16,7 +16,7 @@ const Orders = () => {
     useEffect(()=>{
         validateAuthentication();
 
-        fetch("https://ecommerce.smitghelani.xyz/api/order/myOrders",{method:"POST",body:JSON.stringify({
+        fetch("http://localhost:3000/api/order/myOrders",{method:"POST",body:JSON.stringify({
             id: user.user._id
         })}).then((response)=> response.json())
         .then((data)=>{

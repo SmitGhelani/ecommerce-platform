@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 const destroyToken = async () => {
-    await fetch("https://ecommerce.smitghelani.xyz/api/logout", {
+    await fetch("http://localhost:3000/api/logout", {
         method: 'DELETE',
       })
     .then((response) => response.json())
